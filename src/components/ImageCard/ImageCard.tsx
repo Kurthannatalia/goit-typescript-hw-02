@@ -2,8 +2,21 @@ import css from "./ImageCard.module.css";
 import { IoMdCloudDownload } from "react-icons/io";
 import { SlLike } from "react-icons/sl";
 
-const ImageCard = ({ small, description, likes, download, onClick }) => {
-  const handleDownload = () => {
+type Image = {
+  small: string;
+  description: string;
+  likes: string;
+  download: string;
+  onClick: () => void;
+};
+const ImageCard: React.FC<Image> = ({
+  small,
+  description,
+  likes,
+  download,
+  onClick,
+}) => {
+  const handleDownload = (): void => {
     window.open(small, "_blank");
   };
 
@@ -21,8 +34,9 @@ const ImageCard = ({ small, description, likes, download, onClick }) => {
           {likes}
         </p>
         {description ? <p className={css.desc}>{description}</p> : <p></p>}
-        <a href={download} onClick={handleDownload}>
+        <a className={css.link} href={download} onClick={handleDownload}>
           <IoMdCloudDownload className={css.icon} />
+          Download
         </a>
       </div>
     </div>

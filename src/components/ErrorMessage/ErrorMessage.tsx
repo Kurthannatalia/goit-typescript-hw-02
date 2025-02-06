@@ -1,6 +1,6 @@
 import css from "./Errormesage.module.css";
 
-const ErrorMessage = () => {
+const ErrorMessage: React.FC = () => {
   return (
     <div>
       <p className={`${css.error} animate`}>

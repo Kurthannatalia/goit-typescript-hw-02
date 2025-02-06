@@ -1,7 +1,24 @@
 import ImageCard from "../ImageCard/ImageCard";
 import css from "./ImageGallery.module.css";
 
-export default function ImageGallery({ images, isOpen }) {
+type Images = {
+  id: string;
+  description: string;
+  urls: {
+    small: string;
+    regular: string;
+  };
+  links: {
+    download: string;
+  };
+  likes: string;
+};
+type Gallery = {
+  images: Images[];
+  isOpen: (imageUrl: string) => void;
+};
+
+const ImageGallery: React.FC<Gallery> = ({ images, isOpen }) => {
   return (
     <ul className={css.list}>
       {images.map((image) => (
@@ -17,4 +34,5 @@ export default function ImageGallery({ images, isOpen }) {
       ))}
     </ul>
   );
-}
+};
+export default ImageGallery;

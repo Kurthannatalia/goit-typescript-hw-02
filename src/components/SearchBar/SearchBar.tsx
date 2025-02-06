@@ -2,10 +2,16 @@ import toast, { Toaster } from "react-hot-toast";
 import css from "./SearchBar.module.css";
 import { VscError } from "react-icons/vsc";
 import { IoSearchOutline } from "react-icons/io5";
-import { Formik, Field, Form, ErrorMessage } from "formik";
+import { Formik, Field, Form, ErrorMessage, FormikHelpers } from "formik";
 import { useId } from "react";
 
-const SearchBar = ({ onSearch }) => {
+type Searching = {
+  onSearch: (text: string, page: number) => void;
+};
+type SubmitValues = {
+  text: string;
+};
+const SearchBar: React.FC<Searching> = ({ onSearch }) => {
   const searchId = useId();
   const notify = () =>
     toast(
@@ -15,16 +21,19 @@ const SearchBar = ({ onSearch }) => {
       </p>
     );
 
-  function handleSubmit(values, action) {
+  function handleSubmit(
+    values: SubmitValues,
+    { resetForm }: FormikHelpers<SubmitValues>
+  ): void {
     const { text } = values;
     if (!text) {
       notify();
       return;
     } else {
-      onSearch(text);
+      onSearch(text, 1);
     }
 
-    action.resetForm();
+    resetForm();
   }
 
   return (
@@ -45,10 +54,6 @@ const SearchBar = ({ onSearch }) => {
 
           success: {
             duration: 3000,
-            theme: {
-              primary: "green",
-              secondary: "black",
-            },
           },
         }}
       />
@@ -71,6 +76,7 @@ const SearchBar = ({ onSearch }) => {
           </div>
           <button className={css.formBtn} type="submit">
             <IoSearchOutline className={css.icon} />
+            <span className={css.buttonText}>submit</span>
           </button>
         </Form>
       </Formik>
